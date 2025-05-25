@@ -1,0 +1,118 @@
+A idéia principal aqui é mapear todos os cenários possíveis para a nossa história de cadastro de usuário.
+CT01 - Validar campos obrigatórios
+CT02 - Validação de um e-mail válido - validar domínio do email
+CT03 - Validar mensagem de “E-mail já cadastrado”
+CT04 - Validar senha com 5 caracteres
+CT05 - Validar senha com 6 caracteres
+CT06 - Validar se o input de senha está com o tipo = password
+CT07 - Validar se o botão "Cadastrar permanece desabilitado
+CT08 - Validar se os dados são enviados via API (POST /users ou similar)
+CT09 - Validar se há mensagem de sucesso ou erro
+CT10 - Validar se há mensagem de sucesso ou erro
+CT11 - Validar se o usuário é redirecionado para a página de login após sucesso
+CT12 - Validar se funciona em diferentes dispositivos
+CT13 - Validar centralização e visibilidade da página
+CT14 - Validar se os dados são enviados via HTTPS
+CT15 - Validar se a senha é armazenada criptografada no backend
+
+===========================
+
+CT01: Validar campos obrigatórios
+Dado que o usuário esteja na tela de cadastro
+Quando não preencher todos os campos obrigatórios
+Então o botão "Cadastrar" deve permanecer desabilitado
+E o formulário não deve ser enviado
+
+CT02: Validação de um e-mail válido - validar domínio do email
+Dado que o usuário esteja na tela de cadastro
+Quando preencher o e-mail no formato "nome@dominio.com"
+Então o campo de e-mail deve ser validado como correto
+
+CT03: Validar mensagem de “E-mail já cadastrado”
+Dado que o e-mail informado já existe no sistema
+Quando o usuário preencher todos os campos e clicar em "Cadastrar"
+Então a mensagem "E-mail já cadastrado" deve ser exibida
+
+CT04: Validar senha com 5 caracteres
+Dado que o usuário esteja na tela de cadastro
+Quando preencher os campos com os seguintes dados:
+  | Senha         | Resultado Esperado                         |
+  | abcde         | Mostrar mensagem: "Deve ter no mínimo 6 caracteres" |
+  | abcdef        | Cadastro realizado com sucesso             |
+Então o sistema deve responder conforme o resultado esperado
+
+CT05: Validar se o input de senha está com o tipo = password
+Dado que o usuário esteja na tela de cadastro
+Quando visualizo o campo de senha
+Então o campo de senha deve ter o atributo "type" com valor "password"
+
+CT06: Validar estado do botão "Cadastrar" com campos inválidos
+Dado que o usuário esteja na tela de cadastro
+Quando não preecha os campos de (nome, senha ou e-mail)
+Então o botão de cadastrar não deve estar habilitado para o usuário
+
+CT07: Validar se os dados são enviados via API (POST /users ou similar)
+Dado que o usuário esteja na tela de cadastro
+E preencho todos os campos obrigatórios com dados válidos
+Quando clico no botão "Cadastrar"
+Então uma requisição POST deve ser enviada para o endpoint "/users"
+E a requisição deve conter no corpo os dados informados no formulário
+
+CT08: Validar mensagens de feedback após tentativa de cadastro
+Dado que o usuário esteja na tela de cadastro
+Quando tentar se cadastrar com as seguintes condições:
+  | Condição                | Mensagem esperada           |
+  | Dados válidos           | "Usuário cadastrado com sucesso" |
+  | E-mail já cadastrado    | "E-mail já cadastrado"      |
+  | Campos inválidos        | "Preencha os campos corretamente" |
+Então o sistema deve exibir a mensagem correspondente
+
+CT09: Validar se o usuário é redirecionado para a página de login após sucesso
+Dado que o usuário esteja na tela de cadastro
+E preencho todos os campos obrigatórios com dados válidos
+Quando clico no botão "Cadastrar"
+Então o usuário deve ser redirecionado para a página de login após sucesso
+
+CT10: Validar se funciona em diferentes dispositivos
+Dado que o usuário está acessando o site por diferentes dispositivos (exemplo: desktop, tablet, smartphone)
+Quando acessa a tela de cadastro
+Então todos os campos e botões devem ser exibidos corretamente
+E a funcionalidade de cadastro deve funcionar normalmente em todos os dispositivos
+
+CT11: Validar centralização e visibilidade da página
+Dado que o usuário esteja na tela de cadastro
+Quando for preencher os dados
+Então o formulário deve estar centralizado e visível
+E não deve haver necessidade de rolagem vertical
+
+CT12: Validar se os dados são enviados via HTTPS
+Dado que o usuário esteja na tela de cadastro
+E preencho todos os campos obrigatórios com dados válidos
+Quando clico no botão "Cadastrar"
+Então a requisição para a API deve ser feita utilizando o protocolo "HTTPS"
+
+CT13: Validar se a senha é armazenada criptografada no backend
+Dado que um novo usuário realiza o cadastro com uma senha válida
+Quando os dados são processados e salvos no banco de dados
+Então a senha não deve ser armazenada em texto plano
+E deve ser armazenada como um hash criptográfico seguro (ex: bcrypt, scrypt, Argon2)
+
+CT14: Validar preenchimento com espaços em branco
+Dado que um usuário esteja na tela de cadastro
+Quando preenche os campos obrigatórios apenas com espaços em branco
+Então o formulário não deve ser enviado
+E o botão "Cadastrar deve permanecer desabilitado
+E mensagens de validação devem ser exibidas informando que os campos são obrigatórios
+
+CT15: Validar email com caracteres inválidos
+Dado que o usuário esteja na tela de cadastro
+Quando preencher o campo de email com valores inválidos  
+  | email inválido        |
+  | usuario@              |
+  | @dominio.com          |
+  | usuario@dominio       |
+  | usuario@@dominio.com  |
+  | usuario#dominio.com   |
+Então o campo de email deve ser marcado como inválido
+E o botão "Cadastrar" deve permanecer desabilitado
+E deve ser exibida uma mensagem informando que o email é inválido
